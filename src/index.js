@@ -1,60 +1,74 @@
-// import $ from 'jquery';
-// change require to es6 import style
-
 import './style.scss';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-/*
-import { Map } from 'immutable'; */
+
+import { Map } from 'immutable';
 
 import EntryBar from './components/EntryBar';
 import Note from './components/Note';
+import AlltheNotes from './components/AlltheNotes';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      idCounter: 1,
+      notes: new Map({
 
-      notes: 'o-dark thirty',
+        mars: {
+          color: 'green',
+        },
+        id: {
+          title: '',
+          text: '',
+          x: 0,
+          y: 0,
+          zIndex: 0,
+        },
+      }),
     };
   }
 
-  myMessage = () => {
-    console.log('hello');
+  thenPrint = () => {
+    console.log(this.state);
   };
-  /* newNote = () => {
-    console.log('Help I\'ve been clicked!');
-    // methods for how to make a new thing of class 'note'. Don't describe
-    // how it should look- it has its own class component for that.
-  } */
+
+  setTitle = (text) => {
+    console.log('setTitle received', text);
+    this.setState((prevState) => {
+      return {
+
+        notes: prevState.notes.set(prevState.idCounter, { title: text }),
+        idCounter: prevState.idCounter + 1,
+      };
+    });
+  };
+
+  setId = (text) => {
+    console.log('setId received', text);
+    this.setState((prevState) => {
+      return {
+        notes: prevState.notes.set('id', { title: text }),
+      };
+    });
+  };
 
   render() {
     return (
       <div>
-        <div>
-          what time is it? {this.state.notes}
-        </div>
-        <EntryBar />
+        <EntryBar handleNoteName={this.setTitle} handleId={this.setId} />
         <Note />
-        <div onClick={this.myMessage}
+        <AlltheNotes />
+
+        <div onClick={this.thenPrint}
           role="button"
           tabIndex={0}
         >
-          Click me
+          Click me to show what title index received!
         </div>
       </div>
-    /*
-        <div onClick={this.setState(prevState => ({
-           notes: toLocaleTimeString()
-          }));}
-          role="button"
-          tabIndex={0}>Click me
-          </div>
-
-        */
-
     );
   }
 }

@@ -17,7 +17,8 @@ class note extends Component {
     return (
       <div id="note">
         <div>
-          This is a note called {this.state.title}<i className="fa fa-trash" />
+          This is a note called {this.state.title}
+          <i className="fa fa-trash" />
           <i className="fa fa-arrows-alt" />
           <i className="fa fa-edit" />
           <input />
