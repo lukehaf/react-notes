@@ -6,8 +6,8 @@ class entryBar extends Component {
     super(props);
 
     this.state = {
-      noteName: '',
-      id: '',
+      noteName: 'Name your new Note!',
+
     };
   }
 
@@ -18,7 +18,6 @@ class entryBar extends Component {
 
   handleSubmit = (event) => {
     this.props.handleNoteName(this.state.noteName);
-    this.props.handleId(this.state.id);
     event.preventDefault();
     console.log('A name was submitted:', this.state.noteName);
   }
@@ -40,8 +39,8 @@ class entryBar extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          This is the Entry Bar
-          <textarea onChange={this.handleChange} value={this.state.noteName} />
+
+          <input onChange={this.handleChange} value={this.state.noteName} />
 
         </label>
         <input type="submit" value="Submit" />

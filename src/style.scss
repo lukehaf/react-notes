@@ -18,13 +18,26 @@ body, html {
 }
 #note {
   background-color: white;
-  height: 200px;
-  width: 200px;
+  height: fit-content;
+  width:fit-content;
+  
 
   border-style: double;
   padding: 10px;
   
   
   border-radius: 4px;
+  #topOfNote {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    
+
+    #lSideOfTop {
+      display: flex;
+    }
+  }
+
+  
 
 }

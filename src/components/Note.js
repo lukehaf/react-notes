@@ -1,30 +1,31 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
+import ToggleButton from './ToggleButton';
 
 class note extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      title: 'testing',
-      text: 'I is a note',
-      /* x: 400,
-      y: 12,
-      zIndex: 26, */
-    };
+    this.state = {};
   }
 
   render() {
     return (
       <div id="note">
-        <div>
-          This is a note called {this.state.title}
-          <i className="fa fa-trash" />
+        <div id="topOfNote">
+
+          <div id="lSideOfTop">
+            {this.props.title}
+            <i className="fa fa-trash" />
+            <ToggleButton id="toggle" />
+          </div>
           <i className="fa fa-arrows-alt" />
-          <i className="fa fa-edit" />
-          <input />
         </div>
+
         <div>
-          It has some content: {this.state.text}
+          <textarea>
+            {this.state.text}
+          </textarea>
         </div>
       </div>
     );

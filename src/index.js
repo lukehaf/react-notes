@@ -16,10 +16,6 @@ class App extends Component {
     this.state = {
       idCounter: 1,
       notes: new Map({
-
-        mars: {
-          color: 'green',
-        },
         id: {
           title: '',
           text: '',
@@ -36,37 +32,33 @@ class App extends Component {
   };
 
   setTitle = (text) => {
-    console.log('setTitle received', text);
     this.setState((prevState) => {
       return {
-
         notes: prevState.notes.set(prevState.idCounter, { title: text }),
         idCounter: prevState.idCounter + 1,
       };
     });
   };
 
-  setId = (text) => {
-    console.log('setId received', text);
-    this.setState((prevState) => {
-      return {
-        notes: prevState.notes.set('id', { title: text }),
-      };
-    });
+  deleteNote = (noteID) => {
+    console.log('deleteNote was called');
+    this.setState((prevState) => ({
+      notes: prevState.notes.delete(noteID),
+    }));
   };
 
   render() {
     return (
       <div>
-        <EntryBar handleNoteName={this.setTitle} handleId={this.setId} />
+        <EntryBar handleNoteName={this.setTitle} />
         <Note />
-        <AlltheNotes />
+        <AlltheNotes notes={this.state.notes} />
 
         <div onClick={this.thenPrint}
           role="button"
           tabIndex={0}
         >
-          Click me to show what title index received!
+          Click me to print the state
         </div>
       </div>
     );

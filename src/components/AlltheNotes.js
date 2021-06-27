@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Note from './Note';
 
 class alltheNotes extends Component {
   constructor(props) {
@@ -7,11 +8,18 @@ class alltheNotes extends Component {
     this.state = {};
   }
 
+  createNotes = (anId) => {
+    return <Note key={anId} title={anId.title} />;
+  }
+
   render() {
+    const eachNote = this.props.notes;
+    const listofNotes = eachNote.map(this.createNotes);
+
     return (
-      <div>
-        Here are more notes
-      </div>
+      <ul className="theList">
+        {listofNotes}
+      </ul>
     );
   }
 }
