@@ -12,8 +12,11 @@ class alltheNotes extends Component {
       <Note key={noteObject.id}
         title={noteObject.title}
         id={noteObject.id}
+        x={noteObject.x}
+        y={noteObject.y}
         delete={this.props.delete}
         changeTitle={this.props.changeTitle}
+        onDragNote={this.props.onDragNote}
       />
     );
   }

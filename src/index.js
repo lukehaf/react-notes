@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import './style.scss';
 
 import React, { Component } from 'react';
@@ -25,7 +26,11 @@ class App extends Component {
   setTitle = (text) => {
     this.setState((prevState) => {
       return {
-        notes: prevState.notes.set(prevState.idCounter, { title: text, id: prevState.idCounter }),
+        notes: prevState.notes.set(prevState.idCounter,
+          {
+            title: text, id: prevState.idCounter, x: 500, y: 20, // make sure these x and y defaults
+            // match up with the defaults for the <Draggable> in Note
+          }),
         idCounter: prevState.idCounter + 1,
       };
     });
@@ -45,6 +50,15 @@ class App extends Component {
     }));
   };
 
+  dragNote = (key, coords) => {
+    this.setState((prevState) => ({
+      notes: prevState.notes.update(key, (prevNote) => {
+        return { ...prevNote, ...coords }; /* ...prevNote spreads the note object into
+        its key: value pairs, including title: '', text: '', */
+      }),
+    }));
+  };
+
   render() {
     return (
       <div>
@@ -55,6 +69,7 @@ class App extends Component {
           an array of objects */
           delete={this.deleteNote}
           changeTitle={this.changeTitle}
+          onDragNote={this.dragNote}
         />
 
         <div onClick={this.thenPrint}
