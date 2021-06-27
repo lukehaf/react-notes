@@ -19,7 +19,6 @@ class entryBar extends Component {
   handleSubmit = (event) => {
     this.props.handleNoteName(this.state.noteName);
     event.preventDefault();
-    console.log('A name was submitted:', this.state.noteName);
   }
 
   // arrow functions don't have their own state,

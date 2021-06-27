@@ -6,11 +6,12 @@ class toggleButton extends Component {
     super(props);
 
     this.state = {
-      editMode: false,
+      editMode: true,
     };
   }
 
   handletoggle = () => {
+    this.props.handleLock();
     this.setState((prevState) => {
       return {
         editMode: !prevState.editMode,
@@ -24,7 +25,7 @@ class toggleButton extends Component {
       <div onClick={this.handletoggle}>
 
         {
-          this.state.editMode && <i className="fa fa-check" /> /* the && operator
+          this.state.editMode && <i className="fa fa-lock" /> /* the && operator
           won't evaluate the second expression, if the first expression
           returns false when evaluated! */
         }

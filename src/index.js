@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import { Map } from 'immutable';
 
 import EntryBar from './components/EntryBar';
-import Note from './components/Note';
 import AlltheNotes from './components/AlltheNotes';
 
 class App extends Component {
@@ -15,15 +14,7 @@ class App extends Component {
 
     this.state = {
       idCounter: 1,
-      notes: new Map({
-        id: {
-          title: '',
-          text: '',
-          x: 0,
-          y: 0,
-          zIndex: 0,
-        },
-      }),
+      notes: new Map({}),
     };
   }
 
@@ -34,14 +25,21 @@ class App extends Component {
   setTitle = (text) => {
     this.setState((prevState) => {
       return {
-        notes: prevState.notes.set(prevState.idCounter, { title: text }),
+        notes: prevState.notes.set(prevState.idCounter, { title: text, id: prevState.idCounter }),
         idCounter: prevState.idCounter + 1,
       };
     });
   };
 
+  changeTitle = (text, id) => {
+    this.setState((prevState) => {
+      return {
+        notes: prevState.notes.set(id, { title: text }),
+      };
+    });
+  };
+
   deleteNote = (noteID) => {
-    console.log('deleteNote was called');
     this.setState((prevState) => ({
       notes: prevState.notes.delete(noteID),
     }));
@@ -51,8 +49,10 @@ class App extends Component {
     return (
       <div>
         <EntryBar handleNoteName={this.setTitle} />
-        <Note />
-        <AlltheNotes notes={this.state.notes} />
+        <AlltheNotes notes={this.state.notes}
+          delete={this.deleteNote}
+          changeTitle={this.changeTitle}
+        />
 
         <div onClick={this.thenPrint}
           role="button"

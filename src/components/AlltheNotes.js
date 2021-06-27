@@ -4,12 +4,18 @@ import Note from './Note';
 class alltheNotes extends Component {
   constructor(props) {
     super(props);
-
     this.state = {};
   }
 
   createNotes = (anId) => {
-    return <Note key={anId} title={anId.title} />;
+    return (
+      <Note key={anId.id}
+        title={anId.title}
+        id={anId.id}
+        delete={this.props.delete}
+        changeTitle={this.props.changeTitle}
+      />
+    );
   }
 
   render() {
