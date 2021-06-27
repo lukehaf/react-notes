@@ -42,6 +42,7 @@ class note extends Component {
           <div id="lSideOfTop">
             <input value={this.props.title}
               onChange={this.changeTitle}
+              disabled={this.state.isDisabled}
             />
             <i className="fa fa-trash" onClick={this.handleDelete} />
             <ToggleButton id="toggle" handleLock={this.handleLock} />

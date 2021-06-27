@@ -7,11 +7,11 @@ class alltheNotes extends Component {
     this.state = {};
   }
 
-  createNotes = (anId) => {
+  createNotes = (noteObject) => {
     return (
-      <Note key={anId.id}
-        title={anId.title}
-        id={anId.id}
+      <Note key={noteObject.id}
+        title={noteObject.title}
+        id={noteObject.id}
         delete={this.props.delete}
         changeTitle={this.props.changeTitle}
       />
@@ -19,7 +19,7 @@ class alltheNotes extends Component {
   }
 
   render() {
-    const eachNote = this.props.notes;
+    const eachNote = this.props.notesArray;
     const listofNotes = eachNote.map(this.createNotes);
 
     return (

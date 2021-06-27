@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   thenPrint = () => {
-    console.log(this.state);
+    console.log(this.state.notes.toJS());
   };
 
   setTitle = (text) => {
@@ -31,10 +31,10 @@ class App extends Component {
     });
   };
 
-  changeTitle = (text, id) => {
+  changeTitle = (text, key) => {
     this.setState((prevState) => {
       return {
-        notes: prevState.notes.set(id, { title: text }),
+        notes: prevState.notes.set(key, { title: text, id: key }),
       };
     });
   };
@@ -49,7 +49,10 @@ class App extends Component {
     return (
       <div>
         <EntryBar handleNoteName={this.setTitle} />
-        <AlltheNotes notes={this.state.notes}
+        <AlltheNotes
+          notesArray={Object.values(this.state.notes.toJS())}
+           /* Turns immutable map into a js map, then takes just the map's values and makes
+          an array of objects */
           delete={this.deleteNote}
           changeTitle={this.changeTitle}
         />
