@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Map } from 'immutable';
+import * as db from './services/datastore';
 
 import EntryBar from './components/EntryBar';
 import AlltheNotes from './components/AlltheNotes';
@@ -14,49 +15,44 @@ class App extends Component {
     super(props);
 
     this.state = {
-      idCounter: 1,
       notes: new Map({}),
     };
   }
 
+  componentDidMount() {
+    console.log('fetchnotes');
+    db.fetchNotes((fBNotes) => {
+      this.setState({ notes: new Map(fBNotes) });
+    });
+  }
+
   thenPrint = () => {
-    console.log(this.state.notes.toJS());
+    // console.log(this.state.notes.toJS());
   };
 
   setTitle = (text) => {
-    this.setState((prevState) => {
-      return {
-        notes: prevState.notes.set(prevState.idCounter,
-          {
-            title: text, id: prevState.idCounter, x: 500, y: 20, // make sure these x and y defaults
-            // match up with the defaults for the <Draggable> in Note
-          }),
-        idCounter: prevState.idCounter + 1,
-      };
-    });
+    db.addNote(
+      {
+        title: text, content: '', x: 500, y: 20, // make sure these x and y defaults
+        // match up with the defaults for the <Draggable> in Note
+      },
+    );
   };
 
-  changeTitle = (text, key) => {
-    this.setState((prevState) => {
-      return {
-        notes: prevState.notes.set(key, { title: text, id: key }),
-      };
-    });
+  changeTitle = (key, text) => {
+    db.updateNote(key, { title: text });
+  };
+
+  changeContent = (key, text) => {
+    db.updateNote(key, { content: text });
   };
 
   deleteNote = (noteID) => {
-    this.setState((prevState) => ({
-      notes: prevState.notes.delete(noteID),
-    }));
+    db.deleteNote(noteID);
   };
 
   dragNote = (key, coords) => {
-    this.setState((prevState) => ({
-      notes: prevState.notes.update(key, (prevNote) => {
-        return { ...prevNote, ...coords }; /* ...prevNote spreads the note object into
-        its key: value pairs, including title: '', text: '', */
-      }),
-    }));
+    db.updateNote(key, { ...coords });
   };
 
   render() {
@@ -64,11 +60,12 @@ class App extends Component {
       <div>
         <EntryBar handleNoteName={this.setTitle} />
         <AlltheNotes
-          notesArray={Object.values(this.state.notes.toJS())}
+          notesArray={this.state.notes}
            /* Turns immutable map into a js map, then takes just the map's values and makes
           an array of objects */
           delete={this.deleteNote}
           changeTitle={this.changeTitle}
+          changeContent={this.changeContent}
           onDragNote={this.dragNote}
         />
 

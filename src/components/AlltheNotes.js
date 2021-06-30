@@ -1,36 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Note from './Note';
 
-class alltheNotes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  createNotes = (noteObject) => {
+const alltheNotes = (props) => {
+  const notes = props.notesArray.entrySeq().map(([id, noteObject]) => {
     return (
-      <Note key={noteObject.id}
+
+      <Note key={id}
+        id={id}
         title={noteObject.title}
-        id={noteObject.id}
+        content={noteObject.content}
         x={noteObject.x}
         y={noteObject.y}
-        delete={this.props.delete}
-        changeTitle={this.props.changeTitle}
-        onDragNote={this.props.onDragNote}
+        delete={props.delete}
+        changeTitle={props.changeTitle}
+        changeContent={props.changeContent}
+        onDragNote={props.onDragNote}
       />
-    );
-  }
 
-  render() {
-    const eachNote = this.props.notesArray;
-    const listofNotes = eachNote.map(this.createNotes);
-
-    return (
-      <ul className="theList">
-        {listofNotes}
-      </ul>
     );
-  }
-}
+  });
+
+  return (
+    <div>
+      <div className="notes">
+        {notes}
+      </div>
+    </div>
+
+  );
+};
 
 export default alltheNotes;

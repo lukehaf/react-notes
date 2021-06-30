@@ -10,7 +10,6 @@ class note extends Component {
 
     this.state = {
       isDisabled: false,
-      text: '',
     };
   }
 
@@ -19,11 +18,11 @@ class note extends Component {
   };
 
   handleChange = (event) => {
-    this.setState({ text: event.target.value });
+    this.props.changeContent(this.props.id, event.target.value);
   }
 
   changeTitle = (event) => {
-    this.props.changeTitle(event.target.value, this.props.id);
+    this.props.changeTitle(this.props.id, event.target.value);
   }
 
   handleLock = () => {
@@ -75,7 +74,7 @@ class note extends Component {
 
             <div>
               <textarea onChange={this.handleChange}
-                value={this.state.text}
+                value={this.props.content}
                 disabled={this.state.isDisabled}
               />
 
